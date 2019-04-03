@@ -1,0 +1,74 @@
+{% extends 'index.html' %}
+
+{% block css%}
+<style>
+  @media screen and (min-width: 768px) and (max-width: 959px){
+    article{
+      width:90%;
+      margin:15px auto 0;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block pagebg %}
+  <div class="pagebg sh"></div>
+{% endblock %}
+
+{% block picsbox %}
+<h1 class="t_nav">
+  <span>人生苦短，我学python </span>
+  <p class="n1">文章列表</p>
+</h1>
+{% endblock %}
+
+{% block blogsbox %}
+    <div class="blogsbox">
+    {% for topic in params.topics %}
+        {% if topic.category.superior == 'work' %}
+        <div class="blogs" data-scroll-reveal="enter bottom over 1s">
+            <h3 class="blogtitle"><a href="{{ url_for('main.info_views',id=topic.id) }}" target="_blank">{{topic.title}}</a></h3>
+            <p class="blogtext"><a href="{{ url_for('main.info_views',id=topic.id) }}">{{topic.content}}</a></p>
+            <div class="bloginfo">
+                <ul>
+                  <li class="lmname"><a href="info.html">{{topic.category.cate_name}}</a></li>
+                  <li class="timer">{{topic.pub_date.strftime("%Y-%m-%d")}}</li>
+                  <li class="view">{{topic.read_num}}已阅读</li>
+                </ul>
+             </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+	<div class="sidebar">
+        <div class="tuijian">
+            <h2 class="hometitle">推荐文章</h2>
+            <ul class="tjpic">
+                <i><img src="/static/images/python.jpg"></i>
+                <p><a href="https://www.python.org/">python</a></p>
+            </ul>
+            <ul class="sidenews">
+                <li> <i><img src="/static/images/django.jpg"></i>
+                    <p><a href="https://www.djangoproject.com/">django</a></p>
+                    <span>框架</span>
+                </li>
+                <li> <i><img src="/static/images/flask.jpg"></i>
+                    <p><a href="http://flask.pocoo.org/">flask</a></p>
+                    <span>框架</span>
+                </li>
+                <li> <i><img src="/static/images/mysql.jpg"></i>
+                    <p><a href="https://www.mysql.com/">mysql</a></p>
+                    <span>数据库</span>
+                </li>
+                <li> <i><img src="/static/images/mongodb.jpg"></i>
+                    <p><a href="https://www.mongodb.com/">mongodb</a></p>
+                    <span>数据库</span>
+                </li>
+            </ul>
+        </div>
+	</div>
+{% endblock sidebar %}
+

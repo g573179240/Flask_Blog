@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+
+<head>
+  {% block topfiles %}
+  <meta charset="utf-8">
+  <title>首页-川哥博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/static/images/bitbug_favicon.ico" type="image/x-icon" />
+  <link href="/static/css/base.css" rel="stylesheet">
+  <link href="/static/css/index.css" rel="stylesheet">
+  <link href="/static/css/m.css" rel="stylesheet">
+  <script src="/static/js/jquery.min.js" type="text/javascript"></script>
+  <script src="/static/js/jquery.easyfader.min.js"></script>
+  <script src="/static/js/scrollReveal.js"></script>
+  <script src="/static/js/common.js"></script>
+  {% endblock topfiles %}
+  {% block css %}
+  {% endblock %}
+</head>
+
+<body>
+{% block header %}
+  <header id="header">
+    <!--menu begin-->
+    <div class="menu">
+      <nav class="nav" id="topnav">
+        <li><a href="/">首页</a> </li>
+        <li><a href="/list">技术 · 工作</a>
+          <ul class="sub-nav">
+            {% for category in params.categories %}
+                {% if category.superior == 'work' %}
+                <li>
+                  <a href="/list?cateid={{ category.id }}">{{ category.cate_name }}</a>
+                </li>
+                {% endif %}
+            {% endfor %}
+          </ul>
+        </li>
+        <li><a href="/photo">娱乐 · 生活</a>
+          <ul class="sub-nav">
+            {% for category in params.categories %}
+                {% if category.superior == 'life' %}
+                <li>
+                  <a href="/photo?cateid={{ category.id }}">{{ category.cate_name }}</a>
+                </li>
+                {% endif %}
+            {% endfor %}
+          </ul>
+        </li>
+        <li><a href="/time">时间轴</a> </li>
+        <li><a href="/release">发表</a> </li>
+        <li><a href="/about">About Me</a></li>
+      </nav>
+    </div>
+    {% if not params.user %}
+    <h1 class="logo"><a href="/login" id="login" target="_blank">LGC</a></h1>
+    {% else %}
+    <a id="login" target="_blank">欢迎:{{ params.user.uname }}</a>
+    <a href="/logout" id="register">退出</a>
+    {% endif %}
+    <!--menu end-->
+  </header>
+{% endblock header %}
+{% block pagebg %}
+{% endblock pagebg %}
+
+  <article>
+  {% block picsbox %}
+  {% endblock %}
+  {% block blogsbox %}
+    <!--blogsbox begin-->
+    <div class="blogsbox">
+      <!-- 循环遍历服务器端读取出来的所有博客 -->
+      {% for topic in params.topics %}
+        {% if topic.category.superior == 'work' %}
+        <div class="blogs" data-scroll-reveal="enter bottom over 1s">
+          <h3 class="blogtitle"><a href="{{ url_for('main.info_views',id=topic.id) }}" target="_blank">{{topic.title}}</a></h3>
+          {% if topic.images %}
+          <span
+            {% if loop.index % 2 == 0 %}
+              class="blogpic"
+            {% else %}
+              class="bigpic"
+            {% endif %}
+          >
+            <a href="{{ url_for('main.info_views',id=topic.id) }}" title="">
+              <img src="/static/{{topic.images}}" alt="" topic_id="">
+            </a>
+          </span>
+          {% endif %}
+          <p class="blogtext">{{topic.content}}</p>
+          <div class="bloginfo">
+            <ul>
+              <li class="lmname"><a href="info.html">{{topic.category.cate_name}}</a></li>
+              <li class="timer">{{topic.pub_date.strftime("%Y-%m-%d")}}</li>
+              <li class="view">{{topic.read_num}}已阅读</li>
+            </ul>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endblock %}
+  {% block sidebar %}
+    <!--sidebar begin-->
+    <div class="sidebar">
+      <div class="zhuanti">
+        <h2 class="hometitle">My Life</h2>
+        <ul>
+        {% for topic in params.topics %}
+          {% if topic.category.superior == 'life' %}
+          <li><i><img src="/static/{{ topic.images }}"></i>
+              <p>{{ topic.title }}<span><a href="#">阅读</a></span></p>
+          </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+      </div>
+      <div class="cloud">
+        <h2 class="hometitle">实用链接</h2>
+        <ul>
+          <a href="#">社区：github.com</a>
+          <a href="#">社区：stackoverflow.com</a>
+          <a href="#">工具：djangoproject.com</a>
+        </ul>
+      </div>
+      <div class="guanzhu" id="follow-us">
+        <h2 class="hometitle">联系关注</h2>
+        <ul>
+          <li class="sina"><a href="#" target="_blank"><span>微博</span>P-o-R</a></li>
+          <li class="qq"><a href="#" target="_blank"><span>QQ号</span>5731792240</a></li>
+          <li class="email"><a href="#" target="_blank"><span>邮箱帐号</span>QQ邮箱</a></li>
+        </ul>
+      </div>
+    </div>
+
+{% endblock sidebar %}
+  </article>
+{% block footer %}
+  <footer id="footer">
+    <p>Design by LGC<a href=# target="_blank">个人博客</a> <a href="#">备XXXXXXXXX号-1</a></p>
+  </footer>
+{% endblock footer %}
+{% block bottom %}
+      <a href="#" class="cd-top">Top</a>
+{% endblock bottom %}
+</body>
+
+</html>

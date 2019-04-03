@@ -1,0 +1,98 @@
+{% extends 'index.html' %}
+{% block topfiles %}
+	<meta charset="utf-8">
+	<title>详情页－川哥博客</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="/static/images/bitbug_favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="/static/css/comments.css">
+	<link href="/static/css/base.css" rel="stylesheet">
+	<link href="/static/css/index.css" rel="stylesheet">
+	<link href="/static/css/m.css" rel="stylesheet">
+	<script src="/static/js/jquery.min.js" type="text/javascript"></script>
+	<script src="/static/js/jquery.easyfader.min.js"></script>
+	<script src="/static/js/scrollReveal.js"></script>
+	<script src="/static/js/wangEditor.js"></script>
+	<script src="/static/js/common.js"></script>
+	<script src="/static/js/xcConfirm.js"></script>
+{% endblock topfiles %}
+
+{% block css %}
+	<script>
+		var E = window.wangEditor
+		var editor = new E('#editor')
+		// 或者 var editor = new E( document.getElementById('editor') )
+		editor.customConfig.menus = [
+			'head', // 标题
+			'bold', // 粗体
+			'fontSize', // 字号
+			'fontName', // 字体
+			'italic', // 斜体
+			'underline', // 下划线
+			'strikeThrough', // 删除线
+			'foreColor', // 文字颜色
+			'backColor', // 背景颜色
+			'link', // 插入链接
+			'list', // 列表
+			'justify', // 对齐方式
+			'quote', // 引用
+			'emoticon', // 表情
+			'image', // 插入图片
+			'table', // 表格
+			'video', // 插入视频
+			'undo', // 撤销
+			'redo' // 重复
+		]
+		editor.create()
+	</script>
+{% endblock %}
+
+{% block blogsbox %}
+		<h1 class="t_nav">
+			<p class="n1">文章</p>
+		</h1>
+		<div class="infosbox">
+			<div class="newsview">
+				<h3 class="news_title">{{ params.topic.title }}</h3>
+				<div class="bloginfo">
+					<ul>
+						<li class="lmname"><a href="#">{{params.topic.category.cate_name}}</a></li>
+						<li class="timer">{{params.topic.pub_date.strftime("%Y-%m-%d")}}</li>
+						<li class="view">{{params.topic.read_num}}已阅读</li>
+					</ul>
+				</div>
+				<div class="news_con">
+	                {{ params.topic.content }}
+				</div>
+			</div>
+		</div>
+{% endblock %}
+{% block sidebar %}
+		<div class="sidebar">
+			<div class="tuijian">
+				<h2 class="hometitle">推荐文章</h2>
+				<ul class="tjpic">
+					<i><img src="/static/images/toppic01.jpg"></i>
+					<p><a href="#">别让这些闹心的套路，毁了你的网页设计</a></p>
+				</ul>
+				<ul class="sidenews">
+					<li> <i><img src="/static/images/toppic01.jpg"></i>
+						<p><a href="#">别让这些闹心的套路，毁了你的网页设计</a></p>
+						<span>2018-05-13</span>
+					</li>
+					<li> <i><img src="/static/images/toppic02.jpg"></i>
+						<p><a href="#">给我模板PSD源文件，我给你设计HTML！</a></p>
+						<span>2018-05-13</span>
+					</li>
+					<li> <i><img src="/static/images/v1.jpg"></i>
+						<p><a href="#">别让这些闹心的套路，毁了你的网页设计</a></p>
+						<span>2018-05-13</span>
+					</li>
+					<li> <i><img src="/static/images/v2.jpg"></i>
+						<p><a href="#">给我模板PSD源文件，我给你设计HTML！</a></p>
+						<span>2018-05-13</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</article>
+{% endblock %}
